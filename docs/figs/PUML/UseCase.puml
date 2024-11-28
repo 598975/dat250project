@@ -1,0 +1,25 @@
+@startuml UseCase
+top to bottom direction
+scale 400 width
+
+actor User as U
+actor "Unregistered User" as AU
+
+package "Polls" {
+    usecase "Create Poll" as CP
+    usecase "Vote on Poll" as VP
+}
+
+package "Auth" {
+    usecase "Login" as L
+    usecase "Register" as R
+}
+
+U --> CP
+U --> VP
+
+AU --> R
+
+R --|> L
+
+@enduml

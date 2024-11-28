@@ -8,6 +8,10 @@ This part and other parts of the report probably needs to refer to
 figures. Figure~\ref{fig:framework} from \cite{brown:96} just
 illustrates how figure can be included in the report.
 
+Entity Framework (EF) is an Object-Relational Mapper (ORM) developed by Microsoft for the .NET platform. An ORM supports the creation of applications focused on data management by abstracting the data storage and allows developers to focus on the business logic of their applications while interacting with underlying databases. This abstraction reduces the need to write extensive boilerplate code for database operations and provides a more intuitive object-oriented approach to data handling.
+
+Entity Framework does this by dividing the application into three parts: the conceptual model, the storage model, and the mappings between them. The conceptual model represents the application's domain entities and relationships. It abstracts the data source, allowing developers to work with objects and relationships at a higher, business-oriented level. The storage model describes the logical structure of the database, including tables, columns, keys, and constraints. This model is specific to the underlying data source. Developers interact primarily with the conceptual model, making the application independent of the specific database technology. The Mapping specification language (MSL) defines the mappings between these two models, which specifies how entities, properties, and relationships in the conceptual model align with the database schema in the storage model. The conceptual model is defined using classes in code, and configurated to specify how these classes should be connected in the database.  
+
 \begin{figure}[thb]
 	\centering
 	\includegraphics[scale=0.5]{figs/framework.png}

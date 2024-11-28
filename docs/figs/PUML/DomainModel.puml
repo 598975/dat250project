@@ -1,0 +1,39 @@
+@startuml DomainModel
+left to right direction
+
+together {
+    class User {
+        + id: UUID
+        + email: String
+        + passwordHash: Hashed String
+    }
+    class Polls {
+        + id: UUID
+        + question: String
+        + publishedAt: DateTime
+        + validUntil: DateTime
+        + creatorId: UUID
+    }
+}
+together {
+    class Votes {
+        + id: Integer
+        + publishedAt: DateTime
+        + pollId: UUID
+        + userId: UUID
+        + optionId: Integer
+    }
+    class VoteOptions {
+        + id: UUID
+        + caption String
+        + presenmtationOrder: Integer
+        + pollId: UUID
+    }
+}
+
+User "1" --> "*" Polls : Created by
+Votes "0..*" o-- "1" Polls
+Polls "1" --> "2" VoteOptions
+VoteOptions "1" -- "0..*" Votes
+User "1" -- "0..*" Votes
+@enduml

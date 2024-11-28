@@ -1,0 +1,34 @@
+@startuml SystemArchitecture
+
+actor User
+node FeedApp {
+    node Frontend {
+        [User Interface\n(Svelte)] as UI
+        Interface HTTP
+    }
+    node Backend {
+        [RestAPI\n(ASP.NET Core)] as RestAPI
+        database PostgreSQL
+        [Business logic\n(C#)] as BL
+        [Persistence\n(Entity Framework)] as Per
+    }
+}
+database MongoDB
+database PostgreSQL
+queue RabbitMQ
+node "Analytics component" as AC {
+    [Poll aggregator\n (Java)] as PA
+}
+
+User .l.> UI
+UI -l-> HTTP
+HTTP -l-> RestAPI 
+RestAPI --> BL
+BL --> Per
+Per <--> PostgreSQL
+
+BL --> RabbitMQ
+RabbitMQ <-up- PA
+PA <--> MongoDB
+
+@enduml
