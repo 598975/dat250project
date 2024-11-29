@@ -25,8 +25,31 @@ write where the technology comes from, its history, its context and what problem
 Consider drawing a graph like in \cite{brown:96}.
 
 \subsection{Experiment Design}
+Keeping in line with our evaluation framework we are to first do a comparative feature analysis before we further our attention towards creating hypotheses and experiment design.
+To start of our experiment design we create a comparative feature analysis.
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|X|} % Define column widths with borders
+        \hline
+        \textbf{Feature} & \textbf{JPA} & \textbf{Entity Framework} \\ \hline
+        Schema Abstraction & Relies on annotations and configuration (e.g., Hibernate supports @Table, @Column). & Strong tooling with migrations (Add-Migration, Update-Database commands). \\ \hline
+        Schema Evolution Tools & Schema auto-generation and validation with support for tools like Flyway and Liquibase. & Built-in migration system for versioning and rolling back schema changes. \\ \hline
+        Query Abstraction & JPQL for writing abstract, database-independent queries. & LINQ provides strongly-typed, language-integrated query capabilities. \\ \hline
+		CRUD Boilerplate Reduction & Automatic through frameworks like Spring Data JPA. & Automatic using EF Core Repositories and DbContext for basic CRUD operations. \\ \hline
+		Ease of Refactoring & Code annotations simplify model changes but may require manual migration scripting. & Strong support through auto-generated migration files and IDE integration. \\ \hline
+		Cross-Platform Support & Platform-agnostic via the JVM, supports multiple database engines. & Cross-platform with .NET Core but optimized for Windows and SQL Server. \\ \hline
+		Code Complexity Reduction & Annotations reduce code overhead for mappings but require verbose configuration files. & Strongly-typed models and DbContext minimize configuration and boilerplate code. \\ \hline
+    \end{tabularx}
+    \caption{Comparison of JPA and Entity Framework}
+    \label{tab:jpa_vs_ef}
+\end{table}
 
-Write you hypotheses about what benefits the technology bring and how you can support or reject them via experiments.
+Based on the feature analysis and everything else we have learned we decided to focus our attention on ORM´s contribution in general to a project like this.
+This helped us generate the following hypotheses:
+
+
+
+
 
 \subsection{Experiment Evaluation}
 
