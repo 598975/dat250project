@@ -1,15 +1,52 @@
 \section{Prototype Implementation}
 \label{sec:implementation}
 
-This section should provide brief details of how the prototype has been implemented.
-You may want to use come code snippets here, but only focus on core features and aspects.
-You are not meant to copy/paste your whole application code into the report.
-Focus for instance how other developers may run your application and how they might develop it further...
+\subsection{Back-end}
+
+The back-end application repository which contains the built static files for the SPA and the Docker Compose file for the entire application can be found \href{https://github.com/598975/project-RESTAPI}{here on GitHub}.
+\newline
+\newline
+The back-end REST API and business logic is built in C\# in the framework ASP.NET Core. The .NET project root contains default C\# project files which configure the settings and behavior of the project. A lot of this is standardized, but may need to be configured to match the needs for the project. For example, the appsettings.json file contains the connection string for connecting to the PostgreSQL database and the Program.cs file enables the use of ASP.NET Core authentication and tells the app to use static which are found in the wwwroot directory. 
+
+The application uses the Model-View-Controller (MVC) design pattern. The models are contained in the Models directory. The models are classes which represent and defines the data entities of the application and equivalent to their respective tables in the database. Figure~\ref{fig:voclass} showcases the VoteOption class. You can here see the use of annotations to set the identifying key (primary key) for the class and for this key to be a auto incrementing integer.
+
+\begin{figure}[hbtp]
+    \caption{The VoteOption class}
+	\centering
+	\begin{lstlisting}[language=csh]
+    public class VoteOption
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public String? Caption {  get; set; }
+        public int PresentationOrder { get; set; }
+    }
+    \end{lstlisting}
+	\label{fig:voclass}
+\end{figure}
+
+Controllers are contained in the Controllers directory. Annotations are used for specifying that the classes are controllers, authorization, routing and for what type of HTTP method a function is. The functions are generated but edited to fit the needs of the application. An important functionality for the controllers is the AppDBContext class (in the Data directory) which extends the Entity Framework Core IdentityDbContext class. This is used to query the database for objects and for saving changes to the database.
+
+\subsection{Front-end}
+
+The code behind the built static front-end files can be found in the \href{https://github.com/598975/project-frontend/tree/main}{projects front-end} repository on GitHub. W3CSS is used for styling the application \cite{W3CSS}.
+\newline
+\newline
+The front-end part of the application is built in Svelte with JavaScript. It consists of a SPA which uses the JavaScript Fetch API to interact with the back-end parts of the application. In the finished application the static files JavaScript, CSS and HTML files have been built with the npm command \verb|npm run build| and moved into the back-end. It can however also be ran as a standalone application using the command \verb|npm run dev|. 
+
+During development prior to building the finished front-end, the back- and front-end applications were ran separately. Proxies have been added to the vite.config.js file in order for the front-end to communicate with the back-end with simpler addresses. In the finished application the back- and front-end were combined as this requires fewer processes running concurrently and because running them separately weakens security as it requires weaker Cross Site Request Forgery (CSRF) protection.
+
+The file App.svelte handles the routing of the components/templates in the application. The file Authorization.svelte is used to check if the session is authorized by fetching the /pingauth endpoint from the REST API which return the email of the logged in user if a user is logged in. If not, it show the login template. The templates directory contains the different unique templates that can be shown. The Index template is the default template you will be routed to. If authorized, it will display all existing polls and allow you to create new polls or vote on existing ones. These operations are handled and defined in the Polls.svelte file in the libs directory.
 
 
-The example below shows how you may include code. There are similar
-styles for many other langages - in case you do not use Java in your
-project. You can wrap the listing into a figure in case you need to
-refer to it. How to create a figure was shown in Section~\ref{sec:technology}.
+\subsection{Messaging and NoSQL storage}
 
-\lstinputlisting[language=java]{code/BoksVolum.java}
+The main portion of the messaging parts of the application can be found in the \href{https://github.com/Thorbjorn2021/project-Messaging/tree/main}{messaging repository} on GitHub.
+\newline
+\newline
+An aggregated view of the polls is stored in a MongoDB database. Sending these views to the database is done by using the messaging broker RabbitMQ. The RabbitMQ broker and the analytics component uses Java business logic and is built in a Spring application. 
+
+The client that publishes messages is implemented in the RestAPI in the class RabbitmqClient.cs in the Messaging directory. The VotesController uses this class to publish a message whenever the Post request is triggered, which is whenever any authorized user votes on a poll.
+
+The broker server is active in the background checking for new messages. Whenever it detects a new message in the message queue, it recieves this message, retrieves its contents and save them to the MongoDB database. Recieving the messages is handled by the Reciever.java class and saving the aggregated polls to the database is handler by the AggregatedPollRepository.java class.
