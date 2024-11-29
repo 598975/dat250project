@@ -6,3 +6,5 @@
 report.synctex.gz
 report.out
 report.pdf
+report.fdb_latexmk
+report.fls
