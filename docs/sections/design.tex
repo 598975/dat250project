@@ -1,32 +1,24 @@
 \section{Design}
 \label{sec:design}
 
-Around 5 pages about functional aspects of the FeedApp application.
-
-Concretely, you shall write about 
-
-\begin{itemize}
-	\item the \emph{use cases},
-	\item the \emph{domain model}, and
-	\item the \emph{architecture} (including applied technologies)
-\end{itemize}
-
-Each part shall ideally be accompanied with a graphical representation (diagram).
-
-You may have a look at the \href{https://github.com/selabhvl/dat250public/blob/master/projectdescription/README.md}{Examples on GitHub}.
-
-
-
+The design phase serves as the blueprint for the system’s functionalities, structure, and architecture. It shows the requirements for the FeedApp and how it will be implemented by providing a clear and detailed plan. It does this by outlining the essential design elements, including use cases, the domain model, and the system architecture, which form the foundation of the FeedApp application. The primary goal of the design phase is to define the functionalities that the system will implement, identify the roles and interactions within the application and specify the structural and architectural components required to achieve the system’s objectives. The overall purpose of the FeedApp is to facilitate users to be able to create, view and vote on polls. 
 
 \subsection{Use cases}
 
-The purpose of a use case diagram is to outline the functionalities the system will implement, identify the various roles involved, and specify where user interfaces are needed. The UML provides a high-level view of system interactions which features are necessary, who will be using them, and how users will access them within the application. 
+The purpose of a use case diagram is to outline the functionalities the system will implement, identify the various roles involved, and specify where user interfaces are needed. The UML provides a high-level view of system interactions which features are necessary, who will be using them, and how users will access them within the application. In the FeedApp application, there are two distinct roles: 
 
-In the FeedApp application is there two separate roles. First there is the anonymous user. An anonymous user can only view and vote on public polls. They can also register a new account or log in to an existing one. A logged in user can view and vote on every poll. The logged in user can also create a new poll or edit and delete their existing polls.
+\begin{itemize}
+    \item \textbf{Unregistered User:} Can register a new account or log in to an existing one. Cannot create polls, vote on polls, or interact with polls until authenticated. Registration requires providing name, email and password. 
+    \item \textbf{Logged-In User: }Gains access to all core features of the application.
+     Can create polls by specifying a question and a set of options or participate in polls by casting votes.
+\end{itemize}
+
+
+
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{figs/PUML/UseCase.png}
+	\includegraphics[scale=0.8]{figs/PUML/UseCase.png}
 	\caption{Use case diagram}
 	\label{fig:Use cases}
 \end{figure}
@@ -35,20 +27,67 @@ Poll availability is decided by the polls author upon creation.
 
 \subsection{Domain model}
 
-The domain model shows the domain concepts and their relations. A user can have several votes and polls. Each poll have one user who created the poll and two or more poll options. Each of the poll options can have several votes. 
+A domain model provides a structured overview of the core concepts and entities within the application and their relations.  The domain model for the FeedApp is designed so the users can view, create and interact with polls. By defining the entities and their relationships, the domain model clarifies the structure of the classes and their object-relational mapping. The UML class diagram provides a detailed map of the entities, illustrating the classes, their attributes, and the relationships between them. Below is a more detailed description of the key entities in the domain model: 
+
+\begin{itemize}
+    \item \textbf{User:} The \texttt{User} entity represents the individuals who interact with the application. Every user must have a \texttt{name}, \texttt{email}, and \texttt{password}, all of which are required for registration and login purposes. The \texttt{email} and \texttt{password} are used to authenticate the user when they log in. In addition to login credentials, a \texttt{User} also has a set of \texttt{Polls} that they have created.
+
+    \item \textbf{Poll:} The \texttt{Poll} entity represents a poll created by a user. Each \texttt{Poll} has a unique identifier and contains a \texttt{question} to which users can respond. It also includes a set of \texttt{PollOptions}—the different choices available for users to vote on. The \texttt{Poll} is linked to the \texttt{User} who created it through the \texttt{createdBy} field, meaning each \texttt{Poll} can only have one creator. The \texttt{Poll} also records the date it was created and the last time it was updated. To ensure meaningful interaction, each \texttt{Poll} must have at least two \texttt{PollOptions}.
+
+    \item \textbf{PollOption:} Each \texttt{Poll} contains multiple \texttt{PollOptions}, which represent the specific choices available for voting. Each \texttt{PollOption} belongs to a single \texttt{Poll} and is identified by a unique identifier. A \texttt{PollOption} also contains a string that describes the choice it represents, such as \texttt{"Yes"}, \texttt{"No"}, or other possible answers depending on the nature of the poll. Additionally, each \texttt{PollOption} maintains a set of \texttt{Votes}, which are the user selections associated with it.
+
+    \item \textbf{Vote:} The \texttt{Vote} entity records a user’s selection of a particular \texttt{PollOption} within a \texttt{Poll}. Each \texttt{Vote} has a unique identifier and contains references to both the \texttt{User} who cast the vote and the \texttt{PollOption} that was selected.
+\end{itemize}
+
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{figs/PUML/DomainModel.png}
+	\includegraphics[scale=0.7]{figs/PUML/DomainModel.png}
 	\caption{Domain model}
 	\label{fig:Domain model}
 \end{figure}
 
 \subsection{System architecture}
 
-For the desing of the FeedApp and the analytic components are several technologies needed. The figure shows the different parts of the app and the technologies used to implement them. For the frontend is Svelte used. 
+The system architecture is about the different parts of the project and the technologies needed to implement them. The project can be divided into two main parts as shown in the diagram. Firstly, there is the FeedApp, which contains all the functionality needed for the app to work and can be further divided into frontend and backend. The frontend and backend communicate by HTTP request. The second part is an analytics component used to create and store an aggregate from the FeedApp. These two parts communicate by a messaging service.  
 
-For the backend is ASP.NET Core used. 
+\begin{itemize}
+    \item \textbf{FeedApp Core}
+    \begin{itemize}
+        \item \textbf{Frontend}
+        \begin{itemize}
+            \item Implemented using Svelte, a modern framework for building fast, reactive user interfaces.
+            \item Handles user interactions and displays data fetched from the backend.
+            \item Communicates with the backend via HTTP requests.
+        \end{itemize}
+        \item \textbf{Backend}
+        \begin{itemize}
+            \item Built using ASP.NET Core, a framework for building web apps and services built on the .NET framework. 
+            \item Handles business logic, processes user requests, and interacts with the database.
+        \end{itemize}
+        \item \textbf{Database}
+        \begin{itemize}
+            \item Data persistence is managed using Entity Framework, an object-relational mapper (ORM) for .NET.
+            \item The backend stores and retrieves data from a PostgreSQL database, which provides reliable and efficient storage for structured data.
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Analytics Component}
+    \begin{itemize}
+        \item \textbf{Message Broker}
+        \begin{itemize}
+            \item Communication between the FeedApp and the analytics component is facilitated by RabbitMQ, a robust message broker that handles asynchronous data transfer through queues.
+        \end{itemize}
+        \item \textbf{Data Aggregator}
+        \begin{itemize}
+            \item Implemented using Spring, a Java-based framework that processes incoming messages from RabbitMQ and performs data aggregation.
+        \end{itemize}
+        \item \textbf{Analytics Database}
+        \begin{itemize}
+            \item Aggregated data is stored in a MongoDB database, a NoSQL database optimized for handling unstructured and semi-structured data.
+            \item MongoDB’s JSON-like document structure stores the analytical data.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
 
 
 \begin{figure}[H]
