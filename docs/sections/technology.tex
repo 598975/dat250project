@@ -76,7 +76,7 @@ To test our hypotheses we want to create some experiments that are possible to r
 
 \textbf{Experiment for hypotheses one} \\
 To test if an ORM simplifies maintenance and refactoring of database schemas we need to simulate schema evolution scenarios in ORMs and without ORM.
-To be certain that the experiment is measuring the correct parameters we want to make sure that the database technology is the same and in our case that means using postgresql, and we also want to make the same changes to the table in all experiments.
+To be certain that the experiment is measuring the correct parameters we want to make sure that the database technology is the same and in our case that means using PostgreSQL, and we also want to make the same changes to the table in all experiments.
 To measure the differences we want to look at the following: 
 \begin{itemize}
     \item Measure the time it takes to apply schema changes.
@@ -96,27 +96,91 @@ To measure the differences we want to look at the following:
 \end{itemize}
 
 \subsection{Experiment Evaluation}
+The experiment evaluation face we are sectioning into setup, methodology, results, discussion and limitations.\\
+The experiments for both hypotheses as outlined in the previous subsection \ref{subsec:experiment_design} the fist hypotheses is dependent on a completed project and the second is largely dependent on creating a project.
+These dependencies give us the opportunity to combine the valuation experiments into one experiment.
+The experiment evaluates how ORM frameworks (JPA and EF) \textbf{impact development time}  and \textbf{schema maintenance}.\\ 
+The hypothesis states that ORM abstraction:
+\begin{enumerate}
+	\item ORM abstraction simplifies schema maintenance compared to raw SQL.
+	\item ORM reduces development time by minimizing repetitive code.
+\end{enumerate}
 
-Write about the results of your experiments, either via personal experience reports, quantitative benchmarks, a demostrator case study or a combination of multiple approaches.
+\subsubsection{Experiment setup}
+We want to assess CRUD implementation and schema maintenance efficiency for JPA, EF Core and raw SQL.
 
+\textbf{Environment} \\
+We want the environments to be as similar as possible, but some differences are present.
+\begin{itemize}
+	\item PostgreSQL is used for all applications.
+	\item For EF Core Visual Studio 2022 is used.
+	\item For JPA IntelliJ IDEA is used.
+\end{itemize}
 
-For some reports you may have to include a table with experimental
-results are other kinds of tables that for instance compares
-technologies. Table~\ref{tab:results} gives an example of how to create a table.
+\textbf{Database model}
+The database schema needs to be the same for all applications.
+\begin{verbatim}
+	Poll(ID, Question, PublishedAt, ValidUntil, VoteOptions)
+	VoteOption(ID. Caption, PresentationOrder)
+\end{verbatim}
 
-\begin{table}[bth]
-	\centering
-	\begin{tabular}{llrrrrrr}
-		Config & Property & States & Edges & Peak & E-Time & C-Time & T-Time
-		\\ \hline \hline
-		22-2 & A   &    7,944  &   22,419  &  6.6  \%  &  7 ms & 42.9\% &  485.7\% \\
-		22-2 & A   &    7,944  &   22,419  &  6.6  \%  &  7 ms & 42.9\% &  471.4\% \\
-		30-2 & B   &   14,672  &   41,611  &  4.9  \%  & 14 ms & 42.9\% &  464.3\% \\
-		30-2 & C   &   14,672  &   41,611  &  4.9  \%  & 15 ms & 40.0\% &  420.0\% \\ \hline
-		10-3 & D   &   24,052  &   98,671  & 19.8  \%  & 35 ms & 31.4\% &  285.7\% \\
-		10-3 & E   &   24,052  &   98,671  & 19.8  \%  & 35 ms & 34.3\% &  308.6\% \\
-		\hline \hline
-	\end{tabular}
-	\caption{Selected experimental results on the communication protocol example.}
-	\label{tab:results}
-\end{table}
+\textbf{Tasks} \\
+The experiment is to be conducted by implementing CRUD operations for Poll and VoteOption.
+When the CRUD operations are implemented \textbf{Title} is to be added to \textbf{Poll}.
+
+\subsubsection{Methodology}
+Due to constraints of time the experiment involves only one developer.
+
+\textbf{Metrics} \\
+We measure the following:
+\begin{itemize}
+	\item \textbf{Development Time}: Time to complete each task.
+	\item \textbf{Lines of Code (LOC)}: To quantify boilerplate reduction.
+	\item \textbf{Error Rate}: Number of runtime errors encountered during task completion.
+\end{itemize}
+
+\textbf{Process} \\
+\begin{itemize}
+	\item The developer is timed while implementing CRUD operations and performing the schema modification.
+	\item Errors are logged, and corrections incur time penalties.
+	\item Tasks are executed in a consistent environment to minimize external influences.
+\end{itemize}
+
+\subsubsection{Results}
+\textbf{Development Time} \\
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Task} & \textbf{JPA (Hibernate)} & \textbf{EF Core} & \textbf{Raw SQL} \\ \hline
+CRUD Operations & 45 min & 30 min & 60 min \\ \hline
+Schema Modification & 25 min & 5 min & 40 min \\ \hline
+\end{tabular}
+
+\textbf{Lines of Code (LOC)} \\
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Task} & \textbf{JPA (LOC)} & \textbf{EF Core (LOC)} & \textbf{Raw SQL (LOC)} \\ \hline
+CRUD Operations & 120 & 90 & 200 \\ \hline
+Schema Modification & 30 & 20 & 60 \\ \hline
+\end{tabular}
+
+\textbf{Error Rate} \\
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Task} & \textbf{JPA} & \textbf{EF Core} & \textbf{Raw SQL} \\ \hline
+CRUD Operations & 2 & 1 & 4 \\ \hline
+Schema Modification & 1 & 0 & 3 \\ \hline
+\end{tabular}
+
+\subsubsection{Discussion}
+\textbf{Development Time} \\
+EF Core demonstrated the shortest development time due to its integrated migration tools and LINQ support, which makes schema updates and query construction easier. JPA was similar in development time, but its annotation-based configuration added up to more time spent programming. Raw SQL required the most time, as every query and schema change had to be manually implemented.
+
+\textbf{Lines of Code (LOC)} \\
+EF Core had the least LOC due to its DbContext abstraction, reducing boilerplate code to what seems like a minimum. JPA required more lines due to annotations. Raw SQL added the most LOC due to requiring explicit query and schema manipulation logic.
+
+\textbf{Error Rate} \\
+EF Core had the lowest error rate, benefiting from compile-time checks for LINQ queries and Visual Studio debugging tools. JPA had slightly more runtime errors, as JPQL queries are validated at runtime. Raw SQL had the highest error rate due to manual query construction, which increased typos and logic errors.
+
+\subsubsection{Conclusion}
+The experiment shows that ORMs (EF Core and JPA) significantly reduce development time and boilerplate code compared to raw SQL. EF Core emerged as the most efficient ORM due to its tooling and abstraction, but JPA performed well in cross-platform scenarios. Raw SQL offers maximum control and may be preferable for performance-critical applications.
+
