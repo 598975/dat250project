@@ -1,0 +1,34 @@
+@startuml ProblemHabitatModel
+left to right direction
+
+node JPA
+node EF
+node LINQ
+node JPQL
+node "ORM technology"
+circle "Problem context"
+node "Query abstraction"
+node "Scheme evolution tools"
+node "Scheme abstraction"
+node "CRUD Operations"
+node "Ease of Refactoring"
+node "Cross-Platform Support"
+node "Code Complexity Reduction"
+
+JPA -right- EF : Competitor
+JPA--> "ORM technology": "Is-a"
+EF--> "ORM technology": "Is-a"
+LINQ --> EF : "Part-of"
+JPQL --> JPA : "Part-of"
+JPA--> "Problem context"
+EF--> "Problem context"
+
+"Problem context" --> "Query abstraction"
+"Problem context" --> "Scheme evolution tools"
+"Problem context" --> "Scheme abstraction"
+"Problem context" --> "CRUD Operations"
+"Problem context" --> "Ease of Refactoring"
+"Problem context" --> "Cross-Platform Support"
+"Problem context" --> "Code Complexity Reduction"
+
+@enduml
