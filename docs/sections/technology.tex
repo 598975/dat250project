@@ -28,29 +28,31 @@ The first version of Entity Framework was released in 2008, as part of .NET Fram
 
 
 \subsection{Experiment Design}
-Keeping in line with our evaluation framework we are to first do a comparative feature analysis before we further our attention towards creating hypotheses and experiment design.
+\label{subsec:experiment_design}
+Keeping in line with our evaluation framework \cite{brown:96} we are to first do a comparative feature analysis before we further our attention towards creating hypotheses and experiment design.
 To start of our experiment design we create a comparative feature analysis.
 
 \subsubsection{Comparative feature analysis}
-To conduct our comparative feature analysis we created Table~\ref{tab:jpa_vs_ef}, in this table we have looked at the official documentation of the Entity Framework \cite{ef_getting_started} and the official documentation of JPA \cite{spring_jpa}.
+To conduct our comparative feature analysis we created Table~\ref{tab:jpa_vs_ef_vs_no_orm}, in this table we have looked at the official documentation of the Entity Framework \cite{ef_getting_started} and the official documentation of JPA \cite{spring_jpa}.
 \begin{table}[H]
     \centering
-    \begin{tabularx}{\textwidth}{|l|X|X|} % Define column widths with borders
+    \begin{tabularx}{\textwidth}{|l|X|X|X|} % Define column widths with borders
         \hline
-        \textbf{Feature} & \textbf{JPA} & \textbf{Entity Framework} \\ \hline
-        Schema Abstraction & Relies on annotations and configuration (e.g., Hibernate supports @Table, @Column). & Strong tooling with migrations (Add-Migration, Update-Database commands). \\ \hline
-        Schema Evolution Tools & Schema auto-generation and validation with support for tools like Flyway and Liquibase. & Built-in migration system for versioning and rolling back schema changes. \\ \hline
-        Query Abstraction & JPQL for writing abstract, database-independent queries. & LINQ provides strongly-typed, language-integrated query capabilities. \\ \hline
-		CRUD Boilerplate Reduction & Automatic through frameworks like Spring Data JPA. & Automatic using EF Core Repositories and DbContext for basic CRUD operations. \\ \hline
-		Ease of Refactoring & Code annotations simplify model changes but may require manual migration scripting. & Strong support through auto-generated migration files and IDE integration. \\ \hline
-		Cross-Platform Support & Platform-agnostic via the JVM, supports multiple database engines. & Cross-platform with .NET Core but optimized for Windows and SQL Server. \\ \hline
-		Code Complexity Reduction & Annotations reduce code overhead for mappings but require verbose configuration files. & Strongly-typed models and DbContext minimize configuration and boilerplate code. \\ \hline
+        \textbf{Feature} & \textbf{JPA} & \textbf{Entity Framework} & \textbf{Not Using ORM} \\ \hline
+        Schema Abstraction & Relies on annotations and configuration (e.g., Hibernate supports @Table, @Column). & Strong tooling with migrations (Add-Migration, Update-Database commands). & Schema directly defined and managed in SQL scripts or database-specific tools. \\ \hline
+        Schema Evolution Tools & Schema auto-generation and validation with support for tools like Flyway and Liquibase. & Built-in migration system for versioning and rolling back schema changes. & Requires manual management of schema changes and evolution. \\ \hline
+        Query Abstraction & JPQL for writing abstract, database-independent queries. & LINQ provides strongly-typed, language-integrated query capabilities. & Direct SQL queries must be written and maintained, often specific to the database. \\ \hline
+        CRUD Boilerplate Reduction & Automatic through frameworks like Spring Data JPA. & Automatic using EF Core Repositories and DbContext for basic CRUD operations. & No automation; full CRUD operations must be manually implemented in SQL or procedural code. \\ \hline
+        Ease of Refactoring & Code annotations simplify model changes but may require manual migration scripting. & Strong support through auto-generated migration files and IDE integration. & Refactoring requires careful updates to SQL scripts and application code to avoid inconsistencies. \\ \hline
+        Cross-Platform Support & Platform-agnostic via the JVM, supports multiple database engines. & Cross-platform with .NET Core but optimized for Windows and SQL Server. & Fully dependent on the database and programming environment used. \\ \hline
+        Code Complexity Reduction & Annotations reduce code overhead for mappings but require verbose configuration files. & Strongly-typed models and DbContext minimize configuration and boilerplate code. & High complexity due to explicit SQL queries and manual schema synchronization. \\ \hline
     \end{tabularx}
-    \caption{Comparison of JPA and Entity Framework}
-    \label{tab:jpa_vs_ef}
+    \caption{Comparison of JPA, Entity Framework, and Not Using ORM}
+    \label{tab:jpa_vs_ef_vs_no_orm}
 \end{table}
 
-As shown in Table \ref{tab:jpa_vs_ef} we see that there are some clear similarities and some differences. 
+
+As shown in Table \ref{tab:jpa_vs_ef_vs_no_orm} we see that there are some clear similarities and some differences. 
 As a proper first step we wanted to focus our attention on ORM´s contribution to a project like our own.
 This helped us generate the hypotheses found in the next section.
 
@@ -60,12 +62,37 @@ Another important part looks to be the reduction of repetitive or "boilerplate" 
 With this in mind we created the following hypotheses:
 
 \textbf{Hypotheses one} \newline
-The abstraction provided by an ORM simplifies maintenance and refactoring of database schemas.
+The abstraction provided by an ORM simplifies maintenance and refactoring of database schemas. \\
 
 \textbf{Hypotheses two} \newline
-ORM shortens development time by reducing unnecessary boilerplate code.
+ORM shortens development time by reducing unnecessary boilerplate code. \\
+
+We believe these hypotheses would give an interesting insight regarding the possible benefits of utilizing an ORM.
+
+\subsubsection{Experiment design}
+As the name of the subchapter \ref{subsec:experiment_design} hints to we are to design an experiment. 
+To test our hypotheses we want to create some experiments that are possible to recreate and that are measurable. \\
+
+\textbf{Experiment for hypotheses one} \\
+To test if an ORM simplifies maintenance and refactoring of database schemas we need to simulate schema evolution scenarios in ORMs and without ORM.
+To be certain that the experiment is measuring the correct parameters we want to make sure that the database technology is the same and in our case that means using postgresql, and we also want to make the same changes to the table in all experiments.
+To measure the differences we want to look at the following: 
+\begin{itemize}
+    \item Measure the time it takes to apply schema changes.
+    \item Developer effort (lines of code modified, complexity of changes)
+    \item Risk of introducing errors (While timing the schema change time also record any breaking changes)
+\end{itemize}
 
 
+\textbf{Experiment for hypotheses two}
+To test if an ORM shortens development time by reducing unnecessary boilerplate code we need to build a CRUD application.
+To be certain that the experiment is measuring the correct parameters we need to have some controlled variables like all applications needs to have the same functional requirement.
+To measure the differences we want to look at the following:
+\begin{itemize}
+	\item Development time.
+	\item Code size
+	\item Complexity and readability (measured by developer feedback)
+\end{itemize}
 
 \subsection{Experiment Evaluation}
 
