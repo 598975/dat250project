@@ -2,21 +2,10 @@
 \label{sec:technology}
 
 
-Entity Framework (EF) is an Object-Relational Mapper (ORM) developed by Microsoft for the .NET platform. An ORM supports the creation of applications focused on data management by abstracting the data storage and allows developers to focus on the business logic of their applications while interacting with underlying databases. This abstraction reduces the need to write extensive boilerplate code for database operations and provides a more intuitive object-oriented approach to data handling.
+Entity Framework (EF) is an Object-Relational Mapper (ORM) developed by Microsoft for the .NET platform \cite{EFoverview}. An ORM supports the creation of applications focused on data management by abstracting the data storage. Entity Framework does this by dividing the application into three parts: the conceptual model, the storage model, and the mappings between them. The conceptual model represents the application's domain entities and relationships. The storage model describes the logical structure of the database, including tables, columns, keys, and constraints. This model is specific to the underlying data source. Developers interact primarily with the conceptual model, making the application independent of the specific database technology. The Mapping specification language (MSL) defines the mappings between these two models, which specifies how entities, properties, and relationships in the conceptual model align with the database schema in the storage model. The conceptual model is defined using classes in code, and configurated to specify how these classes should be connected in the database. 
 
-Entity Framework does this by dividing the application into three parts: the conceptual model, the storage model, and the mappings between them. The conceptual model represents the application's domain entities and relationships. It abstracts the data source, allowing developers to work with objects and relationships at a higher, business-oriented level. The storage model describes the logical structure of the database, including tables, columns, keys, and constraints. This model is specific to the underlying data source. Developers interact primarily with the conceptual model, making the application independent of the specific database technology. The Mapping specification language (MSL) defines the mappings between these two models, which specifies how entities, properties, and relationships in the conceptual model align with the database schema in the storage model. The conceptual model is defined using classes in code, and configurated to specify how these classes should be connected in the database.  
-
-\begin{figure}[thb]
-	\centering
-	\includegraphics[scale=0.5]{figs/framework.png}
-	\caption{Software technology evaluation framework.}
-	\label{fig:framework}
-\end{figure}
 
 \subsection{Descriptive Modeling}
-
-write where the technology comes from, its history, its context and what problem it solves.
-Consider drawing a graph like in \cite{brown:96}.
 
 \textbf{Technology genealogy}
 The first version of Entity Framework was released in 2008, as part of .NET Framework 3.5 SP1 and Visual Studio 2008 SP1, by Microsoft. Prior to EF, developers relied on ADO.NET for data access within .NET applications. Entity Framework (EF) was developed as an answer to two different objectives, to raise the level of abstraction when working with modelling of entities, and data engines to store and retrieve data. EF enables developers to work with data in the form of domain-specific objects and properties, such as customers and customer addresses, without having to concern themselves with the underlying database tables and columns where this data is stored. With EF, developers can work at a higher level of abstraction when they deal with the data and can create and maintain data-oriented applications with less code than in traditional applications. Its first version was widely criticized, even attracting a “vote of no confidence” signed by at least one thousand developers. The second version, EF 4.0, was as part of .NET 4.0 in 2010 and addresses many of the criticisms made of version 1, such as lazy loading, testability improvements, foreign key mapping, support for Plain old CLR object (POCO) which is a simple object created in .NET, often used in opposition to complex or specialized objects that object-relational mapping framework often require.  With the release of version 6.0 in 2013, EF became an open source project licensed under Apache License v2. With this version, EF was also moved out of the band from the .NET Framework, which helps in accelerating the pace of development and delivery of new features. 
@@ -28,7 +17,7 @@ Keeping in line with our evaluation framework \cite{brown:96} we are to first do
 To start of our experiment design we create a comparative feature analysis.
 
 \subsubsection{Comparative feature analysis}
-To conduct our comparative feature analysis we created Table~\ref{tab:jpa_vs_ef_vs_no_orm}, in this table we have looked at the official documentation of the Entity Framework \cite{ef_getting_started} and the official documentation of JPA \cite{spring_jpa}.
+To conduct our comparative feature analysis we created Table~\ref{tab:jpa_vs_ef_vs_no_orm}, in this table we have looked at the official documentation of the Entity Framework \cite{rick-anderson_getting_2023} and the official documentation of JPA \cite{noauthor_jpa_nodate}.
 \begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{|l|X|X|X|} % Define column widths with borders
