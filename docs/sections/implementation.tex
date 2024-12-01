@@ -5,7 +5,7 @@ The project consists of three major parts that can be found in individual GitHub
 
 \subsection{Back-end}
 
-The back-end application repository which contains the built static files for the SPA and the Docker Compose file for the entire application can be found \href{https://github.com/598975/project-RESTAPI}{here on GitHub}.
+The back-end application repository which contains the built static files for the SPA and the Docker Compose file for the entire application can be found on GitHub \cite{github_598975project-restapi_nodate}.
 \newline
 \newline
 The back-end REST API and business logic is built in C\# in the framework ASP.NET Core. The .NET project root contains default C\# project files which configure the settings and behavior of the project. A lot of this is standardized, but may need to be configured to match the needs for the project. For example, the appsettings.json file contains the connection string for connecting to the PostgreSQL database and the Program.cs file enables the use of ASP.NET Core authentication and tells the app to use static which are found in the wwwroot directory. 
@@ -32,7 +32,7 @@ Controllers are contained in the Controllers directory. Annotations are used for
 
 \subsection{Front-end}
 
-The code behind the built static front-end files can be found in the \href{https://github.com/598975/project-frontend/tree/main}{projects front-end} repository on GitHub. W3CSS is used for styling the application \cite{W3CSS}.
+The code behind the built static front-end files can be found in the project front-end repository on GitHub \cite{github_598975project-frontend_2024}. W3CSS is used for styling the application \cite{W3CSS}.
 \newline
 \newline
 The front-end part of the application is built in Svelte with JavaScript. It consists of a SPA which uses the JavaScript Fetch API to interact with the back-end parts of the application. In the finished application the static files JavaScript, CSS and HTML files have been built with the npm command \verb|npm run build| and moved into the back-end. It can however also be ran as a standalone application using the command \verb|npm run dev|. 
@@ -44,7 +44,7 @@ The file App.svelte handles the routing of the components/templates in the appli
 
 \subsection{Messaging and NoSQL storage}
 
-The main portion of the messaging parts of the application can be found in the \href{https://github.com/Thorbjorn2021/project-Messaging/tree/main}{messaging repository} on GitHub.
+The main portion of the messaging parts of the application can be found in the messaging repository on GitHub \cite{github_thorbjorn2021project-messaging_nodate}.
 \newline
 \newline
 An aggregated view of the polls is stored in a MongoDB database. Sending these views to the database is done by using the messaging broker RabbitMQ. The RabbitMQ broker and the analytics component uses Java business logic and is built in a Spring application. 
