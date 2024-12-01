@@ -1,22 +1,31 @@
 \section{Introduction}
 \label{sec:introduction}
 
-This project has aimed to create a full-stack prototype of a poll system. The aim of the prototype was to create a system that is functional and secure while meeting key requirements:
-
+This project focuses on the development of a full-stack prototype for a polling system. 
+The goal was to design a system that is not only functional and secure but also capable of meeting the following key requirements:
 \begin{itemize} 
-    \item A web-based interface for users and a REST API for external interaction. 
-    \item Secure access through user authentication. 
-    \item A relational database for structured data storage. 
+    \item A web-based user interface with a REST API for external interactions. 
+    \item Secure user authentication for controlled access. 
+    \item Messaging broker.
+    \item A database for structured data storage. 
+    \item A database for unstructured data storage. 
 \end{itemize}
-
-
-The system is containerized using Docker and hosted on Docker Hub \cite{noauthor_h598970dat250_api_nodate} \cite{noauthor_h598970dat250_messaging_nodate}. 
-PostgreSQL manages structured data storage, while MongoDB handles more flexible, unstructured data. 
-The back end is built with .NET Core, and the front end uses a single-page application framework.\\
-The results show that the system meets the project goals.
-It provides both an interface and a REST API, manages data securely, and integrates the selected technologies. \\
-The rest of this report is organized as follows: \\
+The system incorporates various technologies to achieve these objectives. 
+Initially, the project was set to use Spring Boot for the backend. 
+However, one of the project goals was to explore alternative technology and utilizing the brown framework for evaluating software technology\cite{brown:96}. 
+Therefore, we chose to use .NET Core with Entity Framework, enabling a change in the ORM giving us the opportunity to try the brown framework on ORM. 
+The .NET Core framework supports REST API development, and Entity Framework, as the ORM. As some group members had used .NET as REST API in previous work this seemed to offer a feasible development timeline for the revised stack when compared to the course's compulsory assignment choice of Spring Boot and Spring JPA.
+For the frontend, we implemented a single-page application using Svelte. 
+Data storage was handled using two databases: PostgreSQL for structured data and MongoDB for unstructured data.
+RabbitMQ is used for messaging and a stand alone Spring Boot application is retrieving the data from RabbitMQ and storing it in our MongoDB.
+Containerization was implemented using Docker, with images hosted on Docker Hub to facilitate deployment.
+The results indicate that the system meets its objectives by providing secure user access, effective data management, and seamless component integration. 
+This report discusses the design process, the rationale behind key technology choices, the implementation details, and the outcomes, demonstrating the system’s ability to function as a robust and secure polling platform.\\
+The report is organized as follows: \\
 Section~\ref{sec:design} describes the system's design, including the architecture and use cases. \\
 Section~\ref{sec:technology} outlines the selected technologies and their roles in the project. \\
 Section~\ref{sec:implementation} explains the implementation process, and Section~\ref{sec:conclusions} discusses the outcomes and areas for improvement.\\
+
+The custom docker images can be found \cite{noauthor_h598970dat250_api_nodate} and \cite{noauthor_h598970dat250_messaging_nodate}. \\
+The complete project can be found here \cite{github_598975project-restapi_nodate}, \cite{github_thorbjorn2021project-messaging_nodate} and \cite{github_598975project-frontend_2024}.
 
