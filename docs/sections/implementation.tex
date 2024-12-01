@@ -51,4 +51,4 @@ An aggregated view of the polls is stored in a MongoDB database. Sending these v
 
 The client that publishes messages is implemented in the RestAPI in the class RabbitmqClient.cs in the Messaging directory. The VotesController uses this class to publish a message whenever the Post request is triggered, which is whenever any authorized user votes on a poll.
 
-The broker server is active in the background checking for new messages. Whenever it detects a new message in the message queue, it recieves this message, retrieves its contents and save them to the MongoDB database. Recieving the messages is handled by the Reciever.java class and saving the aggregated polls to the database is handler by the AggregatedPollRepository.java class.
+The broker server is active in the background checking for new messages. Whenever it detects a new message in the message queue, it receives this message, retrieves its contents and save them to the MongoDB database. Receiving the messages is handled by the Receiver.java class and saving the aggregated polls to the database is handler by the AggregatedPollRepository.java class.
