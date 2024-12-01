@@ -10,7 +10,7 @@ The back-end application repository which contains the built static files for th
 \newline
 The back-end REST API and business logic is built in C\# in the framework ASP.NET Core. The .NET project root contains default C\# project files which configure the settings and behavior of the project. A lot of this is standardized, but may need to be configured to match the needs for the project. For example, the appsettings.json file contains the connection string for connecting to the PostgreSQL database and the Program.cs file enables the use of ASP.NET Core authentication and tells the app to use static which are found in the wwwroot directory. 
 
-The application uses the Model-View-Controller (MVC) design pattern. The models are contained in the Models directory. The models are classes which represent and defines the data entities of the application and equivalent to their respective tables in the database. Figure~\ref{fig:voclass} showcases the VoteOption class. You can here see the use of annotations to set the identifying key (primary key) for the class and for this key to be a auto incrementing integer.
+The application uses the Web API design pattern. The models are contained in the Models directory. The models are classes which represent and defines the data entities of the application and equivalent to their respective tables in the database. Figure~\ref{fig:voclass} showcases the VoteOption class. You can here see the use of annotations to set the identifying key (primary key) for the class and for this key to be a auto incrementing integer.
 
 \begin{figure}[hbtp]
     \caption{The VoteOption class}
