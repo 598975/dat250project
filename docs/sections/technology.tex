@@ -205,14 +205,16 @@ Schema Modification & 1 & 0 & 3 \\ \hline
 
 \subsubsection{Discussion}
 \textbf{Development Time} \\
-EF Core demonstrated the shortest development time due to its integrated migration tools and LINQ support, which makes schema updates and query construction easier. JPA was similar in development time, but its annotation-based configuration added up to more time spent programming. Raw SQL required the most time, as every query and schema change had to be manually implemented.
+EF Core demonstrated the shortest development time due to its integrated migration tools and LINQ support, which makes schema updates and query construction easier. JPA was similar in development time, but its annotation-based configuration added up to more time spent programming. Raw SQL required the most time, as every query and schema change had to be manually implemented.\\
 
+\noindent
 \textbf{Lines of Code (LOC)} \\
-EF Core had the least LOC due to its DbContext abstraction, reducing boilerplate code to what seems like a minimum. JPA required more lines due to annotations. Raw SQL added the most LOC due to requiring explicit query and schema manipulation logic.
+EF Core had the least LOC due to its DbContext abstraction, reducing boilerplate code to what seems like a minimum. JPA required more lines due to annotations. Raw SQL added the most LOC due to requiring explicit query and schema manipulation logic.\\
 
+\noindent
 \textbf{Error Rate} \\
 EF Core had the lowest error rate, benefiting from compile-time checks for LINQ queries and Visual Studio debugging tools. JPA had slightly more runtime errors, as JPQL queries are validated at runtime. Raw SQL had the highest error rate due to manual query construction, which increased typos and logic errors.
 
 \subsubsection{Conclusion}
-The experiment shows that ORMs (EF Core and JPA) significantly reduce development time and boilerplate code compared to raw SQL. EF Core emerged as the most efficient ORM due to its tooling and abstraction, but JPA performed well in cross-platform scenarios. Raw SQL offers maximum control and may be preferable for performance-critical applications.
+The experiment shows that ORMs (EF Core and JPA) significantly reduce development time and boilerplate code compared to raw SQL. EF Core emerged as the most efficient ORM due to its tooling and abstraction. Raw SQL offers maximum control and may be preferable for performance-critical applications.
 
