@@ -13,7 +13,6 @@ The back-end REST API and business logic is built in C\# in the framework ASP.NE
 The application uses the Web API design pattern. The models are contained in the Models directory. The models are classes which represent and defines the data entities of the application and equivalent to their respective tables in the database. Figure~\ref{fig:voclass} showcases the VoteOption class. You can here see the use of annotations to set the identifying key (primary key) for the class and for this key to be a auto incrementing integer.
 
 \begin{figure}[hbtp]
-    \caption{The VoteOption class}
 	\centering
 	\begin{lstlisting}[language=csh]
     public class VoteOption
@@ -25,6 +24,7 @@ The application uses the Web API design pattern. The models are contained in the
         public int PresentationOrder { get; set; }
     }
     \end{lstlisting}
+    \caption{The VoteOption class}
 	\label{fig:voclass}
 \end{figure}
 

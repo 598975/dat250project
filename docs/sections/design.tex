@@ -5,7 +5,7 @@ The design phase serves as the blueprint for the system’s functionalities, str
 
 \subsection{Use cases}
 
-The purpose of a use case diagram is to outline the functionalities the system will implement, identify the various roles involved, and specify where user interfaces are needed. The UML provides a high-level view of system interactions which features are necessary, who will be using them, and how users will access them within the application. In the FeedApp application, there are two distinct roles: 
+The purpose of a use case diagram is to outline the functionalities the system will implement, identify the various roles involved, and specify where user interfaces are needed. The UML provides a high-level view of system interactions which features are necessary, who will be using them, and how users will access them within the application. The use case diagram figure \ref{fig:usecase} for the FeedApp application, there are two distinct roles: 
 
 \begin{itemize}
     \item \textbf{Unregistered User:} Can register a new account or log in to an existing one. Cannot create polls, vote on polls, or interact with polls until authenticated. Registration requires providing email and password. 
@@ -20,7 +20,7 @@ The purpose of a use case diagram is to outline the functionalities the system w
 	\label{fig:usecase}
 \end{figure}
 
-The application flow diagram models the screens needed for the front-end of the application, and the actions needed too transition between the different screens. The application consist of three screens. The inital screen shown to the user is the login screen. Here the user will have option to login and register. A failed login attempt will keep the user on the loginpage, while a successfull login attempt will take the user to the main page labeled as dashboard. The main page will have vote buttons for the different polls, which will keep the user on the screen, and a button to logout and return to the login screen. If the user presses the register button on the login screen, the user will be moved to the register screen. The register screen has two buttons, one that move back to the login screen and another to register a new account. A failed register attempt will keep the user on the screen, while a successfull attempt will take the user back to the login screen. Based on the functionality specified in this flow diagram, is how the user screen mock-ups in figure \ref{fig:userscreens} are created.
+The application flow diagram figure \ref{fig:flowdiagram} models the screens needed for the front-end of the application, and the actions needed too transition between the different screens. The application consist of three screens. The inital screen shown to the user is the login screen. Here the user will have option to login and register. A failed login attempt will keep the user on the loginpage, while a successfull login attempt will take the user to the main page labeled as dashboard. The main page will have vote buttons for the different polls, which will keep the user on the screen, and a button to logout and return to the login screen. If the user presses the register button on the login screen, the user will be moved to the register screen. The register screen has two buttons, one that move back to the login screen and another to register a new account. A failed register attempt will keep the user on the screen, while a successfull attempt will take the user back to the login screen. Based on the functionality specified in this flow diagram, is how the user screen mock-ups in figure \ref{fig:userscreens} are created.
 
 \begin{figure}[H]
 	\centering
@@ -47,7 +47,7 @@ The application flow diagram models the screens needed for the front-end of the 
 
 \subsection{Domain model}
 
-A domain model provides a structured overview of the core concepts and entities within the application and their relations.  The domain model for the FeedApp is designed so the users can view, create and interact with polls. By defining the entities and their relationships, the domain model clarifies the structure of the classes and their object-relational mapping. The UML class diagram provides a detailed map of the entities, illustrating the classes, their attributes, and the relationships between them. Below is a more detailed description of the key entities in the domain model: 
+A domain model provides a structured overview of the core concepts and entities within the application and their relations.  The domain model for the FeedApp figure \ref{fig:domainmodel} is designed so the users can view, create and interact with polls. By defining the entities and their relationships, the domain model clarifies the structure of the classes and their object-relational mapping. The UML class diagram provides a detailed map of the entities, illustrating the classes, their attributes, and the relationships between them. Below is a more detailed description of the key entities in the domain model: 
 
 \begin{itemize}
     \item \textbf{User:} The \texttt{User} entity represents the individuals who interact with the application. Every user must have a \texttt{email} and \texttt{password}, all of which are required for registration and login purposes. The \texttt{email} and \texttt{password} are used to authenticate the user when they log in. In addition to login credentials, a \texttt{User} also has a set of \texttt{Polls} that they have created.
@@ -69,7 +69,7 @@ A domain model provides a structured overview of the core concepts and entities 
 
 \subsection{System architecture}
 
-The system architecture is about the different parts of the project and the technologies needed to implement them. The project can be divided into two main parts as shown in the diagram. Firstly, there is the FeedApp, which contains all the functionality needed for the app to work and can be further divided into frontend and backend. The frontend and backend communicate by HTTP request. The second part is an analytics component used to create and store an aggregate from the FeedApp. These two parts communicate by a messaging service.  
+The system architecture is about the different parts of the project and the technologies needed to implement them. The project can be divided into two main parts as shown in the diagram figure \ref{fig:systemarchitecture}. Firstly, there is the FeedApp, which contains all the functionality needed for the app to work and can be further divided into frontend and backend. The frontend and backend communicate by HTTP request. The second part is an analytics component used to create and store an aggregate from the FeedApp. These two parts communicate by a messaging service.  
 
 \begin{itemize}
     \item \textbf{FeedApp Core}
