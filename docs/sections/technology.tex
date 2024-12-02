@@ -146,39 +146,102 @@ We measure the following:
 \subsubsection{Results}
 
 
+
+
 \begin{figure}[H]
     \centering
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-    	\includegraphics[width=\textwidth]{figs/poll_ef.png}
-    	\caption{Poll class in Entity Framework.}
-    	\label{fig:poll_ef}
+        \captionsetup{list=false}
+        \begin{lstlisting}[language=C, basicstyle=\footnotesize\ttfamily]
+namespace DAT250_REST.Models
+{
+    public class Poll
+    {
+        [Key]
+        [DatabaseGenerated
+		(DatabaseGeneratedOption.Identity)]
+        public String? Id { get; set; }
+        public String? Question { get; set; }
+        public DateTime PublishedAt { get; set; }
+        public DateTime ValidUntil { get; set; }
+        public List<VoteOption>? Options { get; set; }
+    }
+}
+        \end{lstlisting}
+		\caption{Poll class in Entity Framework.}
+		\label{fig:poll_ef}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{figs/voteoption_spring.png}
+        \captionsetup{list=false}
+        \begin{lstlisting}[language=Java, basicstyle=\footnotesize\ttfamily]
+@Entity
+public class Poll {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    private Optional<String> Question;
+    private Date publishedAt;
+    private Date validUntil;
+
+    @OneToMany(
+        mappedBy = "pollId",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private Collection<VoteOption> options;
+}
+        \end{lstlisting}
 		\caption{Poll class in Spring JPA.}
 		\label{fig:poll_spring}
 	\end{subfigure}
 	\vspace{0.5cm}
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-    	\includegraphics[width=\textwidth]{figs/voteoption_ef.png}
-    	\caption{VoteOption class in Entity Framework.}
-    	\label{fig:voteoption_ef}
+        \captionsetup{list=false}
+        \begin{lstlisting}[language=C, basicstyle=\footnotesize\ttfamily]
+namespace DAT250_REST.Models
+{
+    public class VoteOption
+    {
+        [Key]
+        [DatabaseGenerated
+		(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public String? Caption { get; set; }
+        public int PresentationOrder { get; set; }
+    }
+}
+        \end{lstlisting}
+		\caption{VoteOption class in Entity Framework.}
+		\label{fig:voteoption_ef}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{figs/voteoption_spring.png}
-    	\caption{VoteOption class in Entity Framework.}
-    	\label{fig:voteoption_spring}
+        \captionsetup{list=false}
+        \begin{lstlisting}[language=Java, basicstyle=\footnotesize\ttfamily]
+@Entity
+public class VoteOption {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private Optional<String> caption;
+    private int presentationOrder;
+    @ManyToOne
+    private String pollId;
+}
+        \end{lstlisting}
+		\caption{VoteOption class in Spring JPA.}
+		\label{fig:voteoption_spring}
 	\end{subfigure}
-	\caption{Code examples from classes with Spring JPA and EF core.}
+	\caption{Code examples from classes with Spring JPA and EF Core.}
     \label{fig:code_examples_ORM}
 \end{figure}
 
+\newpage
 \textbf{Development Time} \\
 \begin{tabular}{|l|c|c|c|}
 \hline
